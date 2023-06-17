@@ -92,4 +92,29 @@ describe('Product List - Integration', () => {
     expect(wrapper.vm.term).toEqual('');
     expect(wrapper.findAllComponents(ProductCard)).toHaveLength(11);
   });
+
+  it('should display the total count of products', async () => {
+    const { wrapper } = await mountProductList(32);
+    const text = wrapper.find('[data-testid="product-total-quantity"]').text();
+    expect(text).toEqual('32 Products');
+  });
+
+  it('should display the total count of products even when filtering', async () => {
+    const { wrapper } = await mountProductList(32, [
+      { title: 'air' },
+      { title: 'air force' },
+    ]);
+    const searchComponent = wrapper.findComponent(SearchBar);
+    searchComponent.find('input[type="text"]').setValue('air');
+    await searchComponent.find('form').trigger('submit');
+    await nextTick();
+    const text = wrapper.find('[data-testid="product-total-quantity"]').text();
+    expect(text).toEqual('2 Products');
+  });
+
+  it('should adapt the text when there is only one product', async () => {
+    const { wrapper } = await mountProductList(1);
+    const text = wrapper.find('[data-testid="product-total-quantity"]').text();
+    expect(text).toEqual('1 Product');
+  });
 });
