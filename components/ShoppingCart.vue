@@ -5,6 +5,9 @@
   >
     <div class="flex items-center justify-between">
       <h3 class="text-2xl font-medium text-gray-700">Your cart</h3>
+      <button data-testid="clear-cart-button" @click="clearCart">
+        Clear cart
+      </button>
       <button
         id="close-button"
         class="text-gray-600 focus:outline-none"
@@ -67,6 +70,9 @@ export default {
   methods: {
     close() {
       this.$emit('close');
+    },
+    clearCart() {
+      this.$cart.clearProducts();
     },
   },
 };
