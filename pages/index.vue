@@ -15,6 +15,7 @@
           v-for="product in filteredProducts"
           :key="product.id"
           :product="product"
+          data-testid="product-card"
         />
       </div>
     </div>
