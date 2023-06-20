@@ -35,6 +35,17 @@ describe('ShoppingCart - unit', () => {
     expect(wrapper.vm).toBeDefined();
   });
 
+  it('should not show "clear cart" when cart is empty', () => {
+    const { wrapper } = mountCart({
+      isOpen: true,
+      items: [],
+    });
+
+    expect(wrapper.find('[data-testid="clear-cart-button"]').exists()).toBe(
+      false
+    );
+  });
+
   it('should emit close event when button is clicked', async () => {
     const { wrapper } = mountCart();
     const button = wrapper.find('button#close-button');

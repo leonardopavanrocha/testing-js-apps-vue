@@ -10,7 +10,7 @@ describe('SearchBar - unit', () => {
   it('should emit search when form is submitted', async () => {
     const wrapper = mount(SearchBar);
     const term = 'watch';
-    await wrapper.find('input[type="text"]').setValue(term);
+    await wrapper.find('input[type="search"]').setValue(term);
     wrapper.find('form').trigger('submit');
 
     expect(wrapper.emitted().search).toBeTruthy();
@@ -20,7 +20,7 @@ describe('SearchBar - unit', () => {
 
   it('should emit search when form is cleared', async () => {
     const wrapper = mount(SearchBar);
-    const searchInput = wrapper.find('input[type="text"]');
+    const searchInput = wrapper.find('input[type="search"]');
     const term = 'watch';
     await searchInput.setValue(term);
     await searchInput.setValue('');

@@ -81,13 +81,13 @@ describe('Product List - Integration', () => {
 
     const searchComponent = wrapper.findComponent(SearchBar);
 
-    searchComponent.find('input[type="text"]').setValue(title);
+    searchComponent.find('input[type="search"]').setValue(title);
     await searchComponent.find('form').trigger('submit');
     await nextTick();
     expect(wrapper.vm.term).toEqual(title);
     expect(wrapper.findAllComponents(ProductCard)).toHaveLength(1);
 
-    searchComponent.find('input[type="text"]').setValue('');
+    searchComponent.find('input[type="search"]').setValue('');
     await nextTick();
     expect(wrapper.vm.term).toEqual('');
     expect(wrapper.findAllComponents(ProductCard)).toHaveLength(11);
@@ -105,7 +105,7 @@ describe('Product List - Integration', () => {
       { title: 'air force' },
     ]);
     const searchComponent = wrapper.findComponent(SearchBar);
-    searchComponent.find('input[type="text"]').setValue('air');
+    searchComponent.find('input[type="search"]').setValue('air');
     await searchComponent.find('form').trigger('submit');
     await nextTick();
     const text = wrapper.find('[data-testid="product-total-quantity"]').text();
