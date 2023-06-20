@@ -101,22 +101,22 @@ describe('Store', () => {
     });
 
     it('should open cart when add to cart button is clicked', () => {
-      cy.addToCart(0);
+      cy.addToCart({ index: 0 });
       gid('shopping-cart').should('not.have.class', 'hidden');
     });
 
     it('should add item to cart when add to cart button is clicked', () => {
-      cy.addToCart(0);
+      cy.addToCart({ index: 0 });
       gid('cart-item').should('have.length', 1);
     });
 
     it('should add 3 products to the cart', () => {
-      cy.addToCart([1, 3, 5]);
+      cy.addToCart({ indices: [1, 3, 5] });
       gid('cart-item').should('have.length', 3);
     });
 
     it('should add all products to the cart', () => {
-      cy.addToCart('all');
+      cy.addToCart({ indices: 'all' });
       gid('cart-item').should('have.length', quantity);
     });
   });

@@ -34,13 +34,13 @@ Cypress.Commands.add('addToCart', (mode) => {
   };
 
   cy.getByTestId('product-card').as('ProductCardList');
-  if (Array.isArray(mode)) {
-    for (const index of mode) {
+  if (mode.indices && Array.isArray(mode.indices)) {
+    for (const index of mode.indices) {
       click(index);
     }
-  } else if (typeof mode === 'number') {
-    click(mode);
-  } else if (typeof mode === 'string' && mode === 'all') {
+  } else if (typeof mode.index === 'number') {
+    click(mode.index);
+  } else if (mode.indices && mode.indices === 'all') {
     cy.get('@ProductCardList')
       .find('button')
       .click({ force: true, multiple: true });
