@@ -23,3 +23,28 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getByTestId', (selector) => {
+  return cy.get(`[data-testid='${selector}']`);
+});
+
+Cypress.Commands.add('addToCart', (mode) => {
+  const click = (index) => {
+    cy.get('@ProductCardList').eq(index).find('button').click({ force: true });
+  };
+
+  cy.getByTestId('product-card').as('ProductCardList');
+  if (Array.isArray(mode)) {
+    for (const index of mode) {
+      click(index);
+    }
+  } else if (typeof mode === 'number') {
+    click(mode);
+  } else if (typeof mode === 'string' && mode === 'all') {
+    cy.get('@ProductCardList')
+      .find('button')
+      .click({ force: true, multiple: true });
+  } else {
+    throw new Error('Invalid mode');
+  }
+});
