@@ -92,7 +92,7 @@ describe('Store', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
-    it.only("should not display 'clear cart' button when cart is empty", () => {
+    it("should not display 'clear cart' button when cart is empty", () => {
       g('button#toggle-cart').click();
       gid('clear-cart-button').should('not.exist');
     });
@@ -143,6 +143,39 @@ describe('Store', () => {
       gid('cart-item').should('have.length', 3);
       gid('clear-cart-button').click();
       gid('cart-item').should('have.length', 0);
+    });
+
+    it('should display quantity 1 when product is added to cart', () => {
+      cy.addToCart({ index: 1 });
+      g('#cart-quantity').should('have.text', 1);
+    });
+
+    it('should increase the quantity when the + button is clicked', () => {
+      cy.addToCart({ index: 1 });
+      g('#cart-quantity').should('have.text', 1);
+      g('#increase').click();
+      g('#cart-quantity').should('have.text', 2);
+      g('#increase').click();
+      g('#cart-quantity').should('have.text', 3);
+    });
+
+    it('should decrese the quantity when the - button is clicked', () => {
+      cy.addToCart({ index: 1 });
+      g('#cart-quantity').should('have.text', 1);
+      g('#decrease').click();
+      g('#cart-quantity').should('have.text', 0);
+      g('#increase').click();
+      g('#increase').click();
+      g('#cart-quantity').should('have.text', 2);
+    });
+
+    it('should not decrease the quantity below  0 when the - button gets clicked', () => {
+      cy.addToCart({ index: 1 });
+      g('#cart-quantity').should('have.text', 1);
+      g('#decrease').click();
+      g('#cart-quantity').should('have.text', 0);
+      g('#decrease').click();
+      g('#cart-quantity').should('have.text', 0);
     });
   });
 });
